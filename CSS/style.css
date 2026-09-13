@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  color: #2f2118;
-  background: #f6f0e8;
+  color: #000000;
+  background: #ffffff;
   font-family: Arial, sans-serif;
 }
 
@@ -13,8 +13,8 @@ body {
 
 .hero {
   padding: 36px;
-  color: white;
-  background: #278e3f;
+  color: rgb(236, 232, 232);
+  background: #2d0fa7;
   border-radius: 24px;
 }
 
@@ -30,10 +30,10 @@ body {
 
 button {
   padding: 12px 18px;
-  color: #2f2118;
+  color: #746161;
   font-weight: 700;
   cursor: pointer;
-  background: #ffd166;
+  background: #ffffff;
   border: 0;
   border-radius: 999px;
 }
