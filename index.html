@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+
+     <a href = "#utama">Lewati ke konten utama</a>
+
+      <! - tambahkan di sini - >
+    <header>
+      <nav aria - label = "Navigasi utama">
+        <a href = "index.html">Beranda</a>
+        <a href = "tentang kami">tentang kami</a>
+      </nav>
+    </header>
+
+    
+  <main id="konten" class="page">
+
     <main class="page">
       <section class="hero">
         <p class="eyebrow">USAHA UMKM</p>
@@ -17,14 +31,26 @@
 
       <section aria-labelledby="produk-title">
         <h2 id="produk-title">Produk Unggulan</h2>
-        <ul class="products">
-          <li>Kopi Susu Vanila - Rp21.000</li>
-          <li>Americano - Rp22.000</li>
-          <li>
-            Mie Goreng aceh telur ceplok - Rp20.000
-            <p>Mie Goreng aceh telur ceplok dimasak dengan bumbu khas aceh, cocok untuk dinikmati semua kalangan</p>
-          </li>
-        </ul>
+        <img src= "assets/images/kopi.jpg" alt="Etalase Kopi Mas Hamzah berisi beberapa kemasan kopi" />
+        <div class = "produk-list">
+          <article class = "product-card">
+            <h3>Kopi Susu Vanila</h3>
+            <p>Rasa Kopi Susu vanilla yang lembut dan nikmat</p>
+            <P class="price">Rp21.000</P>
+          </article>
+
+          <article class="produk-card">
+            <h3>Americano</h3>
+            <p>Kopi hitam dengan rasa yang kuat dan khas</p>
+            <p class="price">Rp22.000</p>
+          </article>
+
+          <article class="product-card">
+            <h3>Mie Goreng Aceh Telur Ceplok</h3>
+            <p>Mie Goreng dengan bumbu khas Aceh dan telur ceplok</p>
+            <p class="price">Rp.20.000</p>
+          </article>
+        </div>  
       </section>
       <section>
         <h2>Jam Buka & Lokasi</h2>
@@ -32,6 +58,12 @@
         <p><strong> Lokasi :</strong> Jl.Gatot Subroto, Comal</p>
       </section>
     </main>
+
+    <! -- tambahkan disini -- >
+    <footer class="site-footer">
+      <p>&copy; 2026 Warkop Mas Hamzah. Data pada halaman ini bersifat dummy.</p>
+    </footer>
+
     <script src="js/script.js"></script>
   </body>
 </html>
