@@ -3,59 +3,38 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Galeri - Warkop Mas Hamzah</title>
-
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
   </head>
 
   <body>
-    <!-- Skip link -->
-    <a href="#konten" class="skip-link">
-      Lewati ke konten utama
-    </a>
+    <a class="skip-link" href="#konten">Lewati ke konten utama</a>
 
-    <!-- Header dan Navbar -->
     <header class="site-header">
       <nav class="nav" aria-label="Navigasi utama">
         <ul>
-          <li>
-            <a href="index.html">Beranda</a>
-          </li>
-
-          <li>
-            <a href="tentang.html">Tentang Kami</a>
-          </li>
-
-          <li>
-            <a href="produk.html">Produk</a>
-          </li>
-
-          <li>
-            <a href="galeri.html" aria-current="page">
-              Galeri
-            </a>
-          </li>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="tentang.html">Tentang Kami</a></li>
+          <li><a href="produk.html">Produk</a></li>
+          <li><a href="galeri.html" aria-current="page">Galeri</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- Konten utama -->
     <main id="konten" class="page">
       <h1>Galeri Warkop Mas Hamzah</h1>
 
-      <!-- Galeri -->
       <section aria-labelledby="media-title">
         <h2 id="media-title">Galeri Warkop</h2>
 
         <div class="gallery-list">
-
           <figure class="media-card">
             <img
               src="assets/images/etalaseKopi.jpg"
               alt="Etalase Warkop Mas Hamzah berisi beberapa pilihan kopi"
             />
-
             <figcaption>
               Etalase produk membantu pelanggan mengenali pilihan kopi.
             </figcaption>
@@ -66,41 +45,42 @@
               src="assets/images/barista.jpg"
               alt="Barista menuang air panas ke dripper kopi"
             />
-
             <figcaption>
               Proses seduh manual menjadi bagian dari cerita produk.
             </figcaption>
           </figure>
 
+          <figure class="media-card">
+            <img
+              src="assets/images/kopi1.jpeg"
+              alt="Minuman kopi yang disajikan di Warkop Mas Hamzah"
+            />
+            <figcaption>
+              Kopi pilihan untuk menemani waktu santai.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <!-- Audio -->
       <section aria-labelledby="audio-title">
         <h2 id="audio-title">Nada Penanda Kedai</h2>
 
         <p id="audio-note">
-          Nada uji singkat memastikan elemen audio dan kontrol
-          browser dapat diperiksa.
+          Nada uji singkat memastikan elemen audio dan kontrol browser dapat diperiksa.
         </p>
 
         <audio
           controls
-          aria-describedby="audio-note" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="
+          aria-describedby="audio-note"
+          src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="
         >
           Browser Anda tidak mendukung pemutar audio.
         </audio>
       </section>
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
-      <p>
-        &copy; 2026 Warkop Mas Hamzah.
-        Data pada halaman ini bersifat dummy.
-      </p>
+      <p>&copy; 2026 Warkop Mas Hamzah. Data pada halaman ini bersifat dummy.</p>
     </footer>
-
-    <script src="js/script.js"></script>
   </body>
 </html>

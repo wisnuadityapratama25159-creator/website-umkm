@@ -3,70 +3,55 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Produk - Warkop Mas Hamzah</title>
-
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
   </head>
 
   <body>
-    <!-- Skip link -->
-    <a href="#konten" class="skip-link">
-      Lewati ke konten utama
-    </a>
+    <a class="skip-link" href="#konten">Lewati ke konten utama</a>
 
-    <!-- Header dan Navbar -->
     <header class="site-header">
       <nav class="nav" aria-label="Navigasi utama">
         <ul>
-          <li>
-            <a href="index.html">Beranda</a>
-          </li>
-
-          <li>
-            <a href="tentang.html">Tentang Kami</a>
-          </li>
-
-          <li>
-            <a href="produk.html" aria-current="page">
-              Produk
-            </a>
-          </li>
-
-          <li>
-            <a href="galeri.html">Galeri</a>
-          </li>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="tentang.html">Tentang Kami</a></li>
+          <li><a href="produk.html" aria-current="page">Produk</a></li>
+          <li><a href="galeri.html">Galeri</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- Konten utama -->
     <main id="konten" class="page">
       <h1>Produk Warkop Mas Hamzah</h1>
 
-      <p>
-        Berikut beberapa produk yang tersedia di Warkop Mas Hamzah.
-      </p>
+      <section>
+        <h2>Pilihan Paket</h2>
 
-      <!-- Kategori Produk -->
-      <section aria-labelledby="kategori-title">
-        <h2 id="kategori-title">Kategori Produk</h2>
+        <div class="produk-list">
+          <article class="product-card">
+            <h3>Paket Seduh Rumahan</h3>
+            <p>Pilihan kopi untuk dinikmati di rumah.</p>
+          </article>
 
-        <ul>
-          <li>Paket seduh rumahan</li>
-          <li>Paket kantor mingguan</li>
-          <li>Paket tester untuk pelanggan baru</li>
-        </ul>
+          <article class="product-card">
+            <h3>Paket Kantor Mingguan</h3>
+            <p>Paket kopi untuk menemani aktivitas di kantor.</p>
+          </article>
+
+          <article class="product-card">
+            <h3>Paket Tester Pelanggan Baru</h3>
+            <p>Paket untuk mencoba pilihan kopi Warkop Mas Hamzah.</p>
+          </article>
+        </div>
       </section>
 
-      <!-- Daftar Harga -->
-      <section aria-labelledby="harga-title">
-        <h2 id="harga-title">Daftar Harga</h2>
+      <section>
+        <h2>Daftar Harga</h2>
 
         <table>
-          <caption>
-            Daftar harga produk Warkop Mas Hamzah
-          </caption>
+          <caption>Daftar harga produk Warkop Mas Hamzah</caption>
 
           <thead>
             <tr>
@@ -78,19 +63,19 @@
 
           <tbody>
             <tr>
-              <th scope="row">Kopi Susu Vanila</th>
+              <td>Kopi Susu Vanila</td>
               <td>250 ml</td>
               <td>Rp21.000</td>
             </tr>
 
             <tr>
-              <th scope="row">Americano</th>
+              <td>Americano</td>
               <td>250 ml</td>
               <td>Rp22.000</td>
             </tr>
 
             <tr>
-              <th scope="row">Mie Goreng Aceh Telur Ceplok</th>
+              <td>Mie Goreng Aceh Telur Ceplok</td>
               <td>1 porsi</td>
               <td>Rp20.000</td>
             </tr>
@@ -99,14 +84,8 @@
       </section>
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
-      <p>
-        &copy; 2026 Warkop Mas Hamzah.
-        Data pada halaman ini bersifat dummy.
-      </p>
+      <p>&copy; 2026 Warkop Mas Hamzah. Data pada halaman ini bersifat dummy.</p>
     </footer>
-
-    <script src="js/script.js"></script>
   </body>
 </html>

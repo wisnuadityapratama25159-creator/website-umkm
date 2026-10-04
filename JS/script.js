@@ -1,6 +1,8 @@
 const promoButton = document.querySelector("#promoButton");
 
-promoButton.addEventListener("click", () => {
-  promoButton.textContent = "Promo Beli 2 gratis 1";
-  console.log("Promo Warkop Mas Hamzah berhasil ditampilkan, Ngopi Kuy!.");
-});
+if (promoButton) {
+  promoButton.addEventListener("click", () => {
+    promoButton.textContent = "Promo Beli 2 gratis 1";
+    console.log("Promo Warkop Mas Hamzah berhasil ditampilkan, Ngopi Kuy!.");
+  });
+}

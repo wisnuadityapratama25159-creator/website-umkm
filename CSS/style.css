@@ -1,14 +1,9 @@
-/* =========================
-   DASAR HALAMAN
-   ========================= */
-
 body {
   min-height: 100vh;
   margin: 0;
   color: #000000;
   background: #FFF5E1;
   font-family: Arial, sans-serif;
-
   display: flex;
   flex-direction: column;
 }
@@ -21,11 +16,6 @@ body {
   margin: 0 auto;
   padding: 32px 20px;
 }
-
-
-/* =========================
-   HERO
-   ========================= */
 
 .hero {
   padding: 36px;
@@ -40,11 +30,6 @@ body {
   text-transform: uppercase;
 }
 
-
-/* =========================
-   TOMBOL
-   ========================= */
-
 button {
   padding: 12px 18px;
   color: #5A3525;
@@ -54,11 +39,6 @@ button {
   border: 0;
   border-radius: 999px;
 }
-
-
-/* =========================
-   SKIP LINK
-   ========================= */
 
 .skip-link {
   position: absolute;
@@ -74,21 +54,11 @@ button {
   left: 8px;
 }
 
-
-/* =========================
-   HEADER
-   ========================= */
-
 .site-header {
   padding: 16px 20px;
   background: white;
   border-bottom: 1px solid #DCDCDC;
 }
-
-
-/* =========================
-   NAVBAR
-   ========================= */
 
 .nav {
   max-width: 920px;
@@ -121,11 +91,6 @@ button {
   font-weight: 800;
 }
 
-
-/* =========================
-   PRODUK
-   ========================= */
-
 .produk-list {
   display: flex;
   flex-wrap: wrap;
@@ -146,22 +111,12 @@ button {
   font-weight: 700;
 }
 
-
-/* =========================
-   GAMBAR
-   ========================= */
-
 img {
   display: block;
   max-width: 100%;
   height: auto;
   border-radius: 16px;
 }
-
-
-/* =========================
-   FIGURE DAN CAPTION
-   ========================= */
 
 figure {
   margin: 0 0 24px;
@@ -171,11 +126,6 @@ figcaption {
   margin-top: 8px;
   color: #6B5B52;
 }
-
-
-/* =========================
-   TABEL
-   ========================= */
 
 table {
   width: 100%;
@@ -195,25 +145,97 @@ td {
   border: 1px solid #DCCBBC;
 }
 
-
-/* =========================
-   FOCUS KEYBOARD
-   ========================= */
-
 a:focus-visible,
 button:focus-visible {
   outline: 3px solid #2563EB;
   outline-offset: 3px;
 }
 
-
-/* =========================
-   FOOTER
-   ========================= */
-
 .site-footer {
   padding: 24px 20px;
   color: white;
   text-align: center;
   background: #2F2118;
+}
+
+/* P04 - Form */
+
+form {
+  margin-top: 24px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #4B2715;
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  color: #2F2118;
+  font: inherit;
+  background: #FFFFFF;
+  border: 2px solid #DCCBBC;
+  border-radius: 8px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+fieldset {
+  margin: 0 0 16px;
+  padding: 16px;
+  border: 2px solid #DCCBBC;
+  border-radius: 12px;
+}
+
+legend {
+  padding: 0 8px;
+  color: #4B2715;
+  font-weight: 700;
+}
+
+fieldset label {
+  display: block;
+  margin: 10px 0;
+}
+
+fieldset input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+form button {
+  margin-top: 4px;
+}
+
+.preview-section {
+  margin-top: 32px;
+}
+
+#preview-form {
+  padding: 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  color: #2F2118;
+  background: #FFFFFF;
+  border: 1px solid #DCCBBC;
+  border-radius: 12px;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #2563EB;
+  outline-offset: 3px;
 }
