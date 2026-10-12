@@ -74,6 +74,12 @@ a:hover {
   top: var(--space-3);
 }
 
+/* a:hover (specificity lebih tinggi dari .skip-link) akan mengubah warna teks
+   menjadi cokelat gelap di atas latar gelap; rule ini menjaga teks tetap terbaca. */
+.skip-link:hover {
+  color: var(--color-surface);
+}
+
 .site-header,
 .site-footer {
   padding: var(--space-3) var(--space-4);
@@ -124,6 +130,12 @@ a:hover {
   color: var(--color-surface);
   background: var(--color-primary);
   border-radius: var(--radius-md);
+}
+
+/* Outline biru (#1d4ed8) di atas latar cokelat hero kontrasnya rendah (sekitar 1,4:1),
+   jadi di dalam hero focus indicator memakai warna highlight. */
+.hero :focus-visible {
+  outline-color: var(--color-highlight);
 }
 
 h1,
