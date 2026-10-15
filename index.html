@@ -24,12 +24,20 @@
     </header>
 
     <main id="konten" class="page">
-      <section class="hero">
-        <p class="eyebrow">Usaha UMKM</p>
-        <h1>WARKOP MAS HAMZAH</h1>
-        <p>Kopi lokal pilihan untuk teman belajar, bekerja, dan berdiskusi.</p>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <p class="eyebrow">Usaha UMKM</p>
+          <h1 id="hero-title">WARKOP MAS HAMZAH</h1>
+          <p>Kopi lokal pilihan untuk teman belajar, bekerja, dan berdiskusi.</p>
 
-        <button id="promoButton" type="button">Cek promo hari ini</button>
+          <button id="promoButton" type="button">Cek promo hari ini</button>
+        </div>
+
+        <img
+          class="hero-image"
+          src="assets/images/etalaseKopi.jpg"
+          alt="Etalase Warkop Mas Hamzah berisi kemasan kopi lokal dan jajanan"
+        />
       </section>
 
       <!-- Produk Unggulan -->
@@ -46,23 +54,33 @@
       <section aria-labelledby="pilihan-title">
         <h2 id="pilihan-title">Produk Pilihan</h2>
 
-        <div class="produk-list">
+        <div class="product-grid">
           <article class="product-card">
+            <span class="product-badge">Favorit</span>
             <h3>Kopi Susu Vanila</h3>
             <p>Kopi susu dengan rasa vanila yang lembut.</p>
             <p class="price">Rp21.000</p>
+            <div class="card-actions">
+              <a href="produk.html">Lihat produk</a>
+            </div>
           </article>
 
           <article class="product-card">
             <h3>Americano</h3>
             <p>Kopi hitam dengan rasa yang kuat dan sederhana.</p>
             <p class="price">Rp22.000</p>
+            <div class="card-actions">
+              <a href="produk.html">Lihat produk</a>
+            </div>
           </article>
 
           <article class="product-card">
             <h3>Mie Goreng Aceh Telur Ceplok</h3>
             <p>Mie goreng dengan bumbu khas Aceh dan telur ceplok.</p>
             <p class="price">Rp20.000</p>
+            <div class="card-actions">
+              <a href="produk.html">Lihat produk</a>
+            </div>
           </article>
         </div>
       </section>

@@ -32,7 +32,11 @@ html {
   color-scheme: light;
 }
 
+/* P06: Flexbox kolom agar footer berada di bawah dan konsisten di semua halaman. */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
   color: var(--color-text);
   background: var(--color-surface-soft);
@@ -101,15 +105,28 @@ a:hover {
   margin-inline: auto;
 }
 
+/* P06: konten utama mengisi ruang kosong sehingga footer turun ke bawah. */
+.page {
+  flex: 1;
+}
+
+/* P06-02: .nav memakai Flexbox. Main axis horizontal, align-items mengatur cross axis. */
+.nav {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* P06: daftar menu juga Flexbox satu dimensi; flex-wrap menurunkan item jika ruang habis. */
 .nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
   padding: 0;
   margin: 0;
   list-style: none;
-}
-
-.nav li {
-  display: inline-block;
-  margin: 0 var(--space-2) var(--space-1) 0;
 }
 
 .nav a[aria-current="page"] {
@@ -125,10 +142,20 @@ a:hover {
   padding-block: var(--space-5);
 }
 
+/* P06-02: hero memakai Grid dua track (teks dan gambar). */
 .hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-4);
+  align-items: center;
   padding: var(--space-5);
   color: var(--color-surface);
   background: var(--color-primary);
+  border-radius: var(--radius-md);
+}
+
+.hero-image {
+  width: 100%;
   border-radius: var(--radius-md);
 }
 
@@ -170,7 +197,9 @@ h1 {
   font-weight: 800;
 }
 
-button {
+/* .button dipakai oleh tautan "Tanya produk" agar tampil seperti tombol. */
+button,
+.button {
   display: inline-block;
   padding: var(--space-2) var(--space-3);
   color: var(--color-surface);
@@ -183,7 +212,8 @@ button {
   border-radius: var(--radius-sm);
 }
 
-button:hover {
+button:hover,
+.button:hover {
   color: var(--color-surface);
   background: var(--color-primary-strong);
 }
@@ -208,6 +238,62 @@ form {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
+}
+
+/* P06-02: Grid untuk kumpulan card (kolom dan baris).
+   product-grid 3 track, gallery-grid 2 track. */
+.product-grid,
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.gallery-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Jarak antarcard sudah diatur gap, jadi margin card di dalam grid dinolkan. */
+.product-grid .product-card,
+.gallery-grid .media-card {
+  margin-block: 0;
+}
+
+/* P06-02: isi card memakai Flexbox kolom (main axis vertikal). */
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-badge {
+  align-self: flex-start;
+  padding: 0.25rem var(--space-2);
+  color: var(--color-primary-strong);
+  font-size: 0.875rem;
+  font-weight: 800;
+  background: var(--color-highlight);
+  border-radius: 999px;
+}
+
+/* P06-02: kelompok aksi memakai Flexbox satu baris.
+   margin-top: auto mendorong aksi ke dasar card. */
+.card-actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+/* P06: figure galeri disusun vertikal (gambar lalu keterangan). */
+.media-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.media-card figcaption {
+  margin: 0;
 }
 
 figure {

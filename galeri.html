@@ -29,7 +29,7 @@
       <section aria-labelledby="media-title">
         <h2 id="media-title">Galeri Warkop</h2>
 
-        <div class="gallery-list">
+        <div class="gallery-grid">
           <figure class="media-card">
             <img
               src="assets/images/etalaseKopi.jpg"
@@ -69,11 +69,9 @@
           Nada uji singkat memastikan elemen audio dan kontrol browser dapat diperiksa.
         </p>
 
-        <audio
-          controls
-          aria-describedby="audio-note"
-          src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="
-        >
+        <!-- Audio dimuat dari file, tidak diputar otomatis. preload="none" menunda pengunduhan sampai tombol play ditekan. -->
+        <audio controls preload="none" aria-describedby="audio-note">
+          <source src="assets/audio/nada-kedai.mp3" type="audio/mpeg" />
           Browser Anda tidak mendukung pemutar audio.
         </audio>
       </section>
