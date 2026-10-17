@@ -90,8 +90,17 @@
       <section>
         <h2 id="harga-title">Daftar Harga</h2>
 
+        <!-- P07-02: .table-scroll membuat hanya tabel yang bergulir ke samping di layar sempit.
+             role="region" + aria-labelledby (menunjuk ke ID caption) + tabindex="0" membuatnya
+             punya nama dan bisa digulir dengan keyboard. -->
+        <div
+          class="table-scroll"
+          role="region"
+          aria-labelledby="daftar-harga-caption"
+          tabindex="0"
+        >
         <table>
-          <caption>Daftar harga produk Warkop Mas Hamzah</caption>
+          <caption id="daftar-harga-caption">Daftar harga produk Warkop Mas Hamzah</caption>
 
           <thead>
             <tr>
@@ -121,6 +130,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </section>
     </main>
 

@@ -19,6 +19,9 @@
   --radius-sm: 0.5rem;
   --radius-md: 0.875rem;
 
+  /* P07-01: ukuran minimum area sentuh (sekitar 44px) untuk tautan dan tombol. */
+  --target-size: 2.75rem;
+
   --shadow-card: 0 0.5rem 1.5rem rgb(47 33 24 / 0.1);
 }
 
@@ -30,6 +33,9 @@
 
 html {
   color-scheme: light;
+  /* P07-01: cegah browser ponsel memperbesar teks sendiri saat layar diputar. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* P06: Flexbox kolom agar footer berada di bawah dan konsisten di semua halaman. */
@@ -37,6 +43,9 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* P07-01: 100dvh mengikuti tinggi layar ponsel yang sebenarnya (bar alamat naik/turun).
+     Browser lama yang belum mendukung tetap memakai 100vh di atas. */
+  min-height: 100dvh;
   margin: 0;
   color: var(--color-text);
   background: var(--color-surface-soft);
@@ -91,6 +100,13 @@ a:hover {
   border-bottom: 1px solid var(--color-border);
 }
 
+/* P07-01: .nav sudah mengatur lebar dan margin tepinya sendiri (lihat di bawah).
+   Padding horizontal header dinolkan agar jarak tepi tidak bertumpuk dua kali
+   (sebelumnya menu hanya selebar 240px pada layar 320px). */
+.site-header {
+  padding-inline: 0;
+}
+
 .site-footer {
   margin-top: var(--space-5);
   color: var(--color-muted);
@@ -113,42 +129,55 @@ a:hover {
 /* P06-02: .nav memakai Flexbox. Main axis horizontal, align-items mengatur cross axis. */
 .nav {
   display: flex;
+  flex-direction: column;
   gap: var(--space-3);
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
 }
 
-/* P06: daftar menu juga Flexbox satu dimensi; flex-wrap menurunkan item jika ruang habis. */
+/* P06: daftar menu juga Flexbox satu dimensi; flex-wrap menurunkan item jika ruang habis.
+   P07-02 (mobile-first): baseline menu ditumpuk satu kolom. align-items: flex-start wajib di sini,
+   sebab align-items: center dari P06 akan memusatkan tautan secara horizontal pada kolom.
+   Jarak antarmenu cukup dari tinggi tautan (44px), jadi gap vertikal dinolkan. */
 .nav ul {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-2);
+  align-items: flex-start;
+  gap: 0;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
+/* P07-01: semua tautan menu memakai ukuran yang sama (bukan hanya halaman aktif),
+   sehingga area sentuh minimal 44px dan posisi menu tidak bergeser antarhalaman. */
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-size);
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
 .nav a[aria-current="page"] {
-  padding: var(--space-1) var(--space-2);
   color: var(--color-primary-strong);
   font-weight: 700;
   text-decoration: none;
   background: var(--color-highlight);
-  border-radius: var(--radius-sm);
 }
 
 .page {
-  padding-block: var(--space-5);
+  padding-block: var(--space-4);
 }
 
-/* P06-02: hero memakai Grid dua track (teks dan gambar). */
+/* P07-01 (mobile-first): hero dimulai satu kolom (teks lalu gambar, sama dengan urutan HTML).
+   minmax(0, 1fr) mencegah isi memaksa kolom melebar melebihi layar. */
 .hero {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   align-items: center;
-  padding: var(--space-5);
+  padding: var(--space-4);
   color: var(--color-surface);
   background: var(--color-primary);
   border-radius: var(--radius-md);
@@ -170,6 +199,8 @@ h2,
 h3 {
   line-height: 1.2;
   text-wrap: balance;
+  /* P07-01: kata panjang dipatahkan alih-alih memotong atau melebarkan halaman. */
+  overflow-wrap: break-word;
 }
 
 h1 {
@@ -197,10 +228,12 @@ h1 {
   font-weight: 800;
 }
 
-/* .button dipakai oleh tautan "Tanya produk" agar tampil seperti tombol. */
+/* .button dipakai oleh tautan "Tanya produk" agar tampil seperti tombol.
+   P07-01: min-height menjaga area sentuh tombol minimal 44px. */
 button,
 .button {
   display: inline-block;
+  min-height: var(--target-size);
   padding: var(--space-2) var(--space-3);
   color: var(--color-surface);
   font: inherit;
@@ -228,9 +261,10 @@ button:hover,
   background: var(--color-highlight-strong);
 }
 
+/* P07-01: tabel dikeluarkan dari gabungan selektor ini karena kini dibungkus .table-scroll
+   (lihat bagian tabel). */
 .product-card,
 .media-card,
-table,
 form {
   margin-block: var(--space-3);
   padding: var(--space-3);
@@ -241,16 +275,12 @@ form {
 }
 
 /* P06-02: Grid untuk kumpulan card (kolom dan baris).
-   product-grid 3 track, gallery-grid 2 track. */
+   P07-01 (mobile-first): dimulai satu kolom; jumlah kolom bertambah lewat media query di bawah. */
 .product-grid,
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
-}
-
-.gallery-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* Jarak antarcard sudah diatur gap, jadi margin card di dalam grid dinolkan. */
@@ -285,6 +315,13 @@ form {
   margin-top: auto;
 }
 
+/* P07-01: tautan teks di dalam kartu (mis. "Lihat produk") diberi tinggi sentuh 44px. */
+.card-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-size);
+}
+
 /* P06: figure galeri disusun vertikal (gambar lalu keterangan). */
 .media-card {
   display: flex;
@@ -305,10 +342,33 @@ caption {
   color: var(--color-muted);
 }
 
+/* P07-02: .table-scroll membungkus tabel; hanya pembungkus ini yang menangani scroll horizontal,
+   bukan seluruh halaman. Tampilan kartunya (border, bayangan, padding) berasal dari P07-01. */
+.table-scroll {
+  max-width: 100%;
+  margin-block: var(--space-3);
+  padding: var(--space-3);
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+/* Pembungkus punya tabindex="0", jadi indikator fokusnya dibuat eksplisit. */
+.table-scroll:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Lebar minimum membuat kolom tetap terbaca; di layar sempit tabel digulir di dalam pembungkus. */
+.table-scroll table {
+  min-width: 40rem;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 0;
 }
 
 caption {
@@ -351,12 +411,19 @@ legend {
   border-radius: var(--radius-sm);
 }
 
+/* P07-01: pilihan radio/checkbox dibuat lebih besar dan labelnya setinggi area sentuh. */
 input[type="radio"],
 input[type="checkbox"] {
-  width: auto;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
 }
 
+/* P07-01: fieldset punya min-width bawaan = lebar isi terpanjang yang bisa melebarkan form
+   di layar kecil; min-width: 0 membuatnya mengikuti lebar wadah. */
 fieldset {
+  min-width: 0;
   margin: 0 0 var(--space-3);
   padding: var(--space-3);
   border: 1px solid var(--color-border);
@@ -364,18 +431,83 @@ fieldset {
 }
 
 fieldset label {
-  display: block;
-  margin: var(--space-1) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--target-size);
+}
+
+/* P07-01: tombol kirim penuh selebar form di layar kecil agar mudah disentuh. */
+form button[type="submit"] {
+  width: 100%;
 }
 
 audio {
+  width: 100%;
   max-width: 100%;
 }
 
 #preview-form {
   padding: var(--space-3);
   white-space: pre-wrap;
+  /* P07-01: teks panjang tanpa spasi (mis. email atau pesan) dipatahkan, tidak melebarkan halaman. */
+  overflow-wrap: anywhere;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   P07-02: Media query mobile-first, diletakkan di akhir stylesheet.
+   Semua aturan di atas adalah baseline layar kecil (satu kolom); breakpoint hanya MENAMBAH
+   layout saat ruang cukup. Satuan rem mengikuti ukuran huruf bawaan browser pengguna.
+   ========================================================================== */
+
+/* >= 42rem (672px): menu berbaris dan galeri dua kolom. */
+@media (min-width: 42rem) {
+  .page {
+    padding-block: var(--space-5);
+  }
+
+  .hero {
+    padding: var(--space-5);
+  }
+
+  .nav ul {
+    flex-direction: row;
+    align-items: center;
+    gap: 0 var(--space-1);
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  form button[type="submit"] {
+    width: auto;
+  }
+}
+
+/* >= 48rem (768px): hero teks + gambar berdampingan; kartu produk dua kolom. */
+@media (min-width: 48rem) {
+  .hero {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* >= 60rem (960px): navigasi satu baris dengan tepi rata; kartu produk tiga kolom. */
+@media (min-width: 60rem) {
+  .nav {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
