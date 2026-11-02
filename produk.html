@@ -6,6 +6,7 @@
     <title>Produk - Warkop Mas Hamzah</title>
     <link rel="stylesheet" href="CSS/style.css" />
     <script src="JS/script.js" defer></script>
+    <script src="JS/app.js" defer></script>
   </head>
 
   <body>
@@ -47,43 +48,49 @@
         </div>
       </section>
 
-      <!-- P06-02: Produk Pilihan, setelah Pilihan Paket dan sebelum Daftar Harga -->
+      <!-- P09: Produk Pilihan dirender oleh JS/app.js dari array daftarProduk.
+           Kartu produk TIDAK ditulis manual di HTML agar tidak tampil dua kali. -->
       <section aria-labelledby="produk-pilihan-title">
         <h2 id="produk-pilihan-title">Produk Pilihan</h2>
 
-        <div class="product-grid">
-          <article class="product-card">
-            <span class="product-badge">Terlaris</span>
-            <h3>Kopi Susu Vanila</h3>
-            <p>Kopi susu dengan rasa vanila yang lembut.</p>
-            <p class="price">Rp21.000</p>
-            <div class="card-actions">
-              <a class="button" href="kontak.html">Tanya produk</a>
-              <a href="#harga-title">Lihat tabel harga</a>
-            </div>
-          </article>
+        <!-- P09: Ringkasan katalog, angkanya dihitung oleh app.js -->
+        <div class="summary-grid" id="ringkasan-katalog" aria-label="Ringkasan katalog produk">
+          <div class="summary-item">
+            <p class="summary-value" id="ringkasan-total">-</p>
+            <p class="summary-label">Total produk</p>
+          </div>
+          <div class="summary-item">
+            <p class="summary-value" id="ringkasan-aktif">-</p>
+            <p class="summary-label">Produk aktif</p>
+          </div>
+          <div class="summary-item">
+            <p class="summary-value" id="ringkasan-tersedia">-</p>
+            <p class="summary-label">Produk tersedia</p>
+          </div>
+          <div class="summary-item">
+            <p class="summary-value" id="ringkasan-habis">-</p>
+            <p class="summary-label">Produk habis</p>
+          </div>
+        </div>
 
-          <article class="product-card">
-            <span class="product-badge">Segar</span>
-            <h3>Americano</h3>
-            <p>Kopi hitam dengan rasa yang kuat dan sederhana.</p>
-            <p class="price">Rp22.000</p>
-            <div class="card-actions">
-              <a class="button" href="kontak.html">Tanya produk</a>
-              <a href="#harga-title">Lihat tabel harga</a>
-            </div>
-          </article>
+        <p class="catalog-note">
+          Catatan: data stok hanya contoh (dummy) untuk praktikum, bukan stok sebenarnya.
+        </p>
 
-          <article class="product-card">
-            <span class="product-badge">Hemat</span>
-            <h3>Mie Goreng Aceh Telur Ceplok</h3>
-            <p>Mie goreng dengan bumbu khas Aceh dan telur ceplok.</p>
-            <p class="price">Rp20.000</p>
-            <div class="card-actions">
-              <a class="button" href="kontak.html">Tanya produk</a>
-              <a href="#harga-title">Lihat tabel harga</a>
-            </div>
-          </article>
+        <!-- P09: container kartu produk, diisi oleh JavaScript -->
+        <div class="product-grid" id="katalog-produk">
+          <noscript>Aktifkan JavaScript untuk melihat katalog produk.</noscript>
+        </div>
+      </section>
+
+      <!-- P09-02: Diisi oleh renderProduk() di JS/app.js dari array produkUmkm. -->
+      <section aria-labelledby="produk-dinamis-title">
+        <h2 id="produk-dinamis-title">Menu Hari Ini</h2>
+
+        <p id="produk-ringkasan" class="js-product-summary" aria-live="polite">Memuat ringkasan produk...</p>
+
+        <div class="product-grid js-product-grid" id="produk-dinamis">
+          <noscript>Aktifkan JavaScript untuk melihat daftar menu.</noscript>
         </div>
       </section>
 

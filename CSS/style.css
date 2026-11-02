@@ -458,6 +458,122 @@ audio {
 }
 
 /* ==========================================================================
+   P09: Ringkasan katalog, label stok, dan catatan data dummy.
+   Hanya menambah aturan baru; desain lama tidak diubah.
+   ========================================================================== */
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-3);
+  margin-block: var(--space-3);
+}
+
+.summary-item {
+  padding: var(--space-3);
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.summary-item p {
+  margin: 0;
+}
+
+.summary-value {
+  color: var(--color-primary-strong);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.summary-label {
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.catalog-note {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.product-category {
+  margin-block: 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.stock-status {
+  align-self: flex-start;
+  margin-block: 0 var(--space-3);
+  padding: 0.25rem var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.stock-status--tersedia {
+  color: #14532d;
+  background: #dcfce7;
+}
+
+.stock-status--terbatas {
+  color: #78350f;
+  background: #fde68a;
+}
+
+.stock-status--habis {
+  color: #7f1d1d;
+  background: #fee2e2;
+}
+
+/* ==========================================================================
+   P09-02: Produk dinamis (js-product-*) dan badge stok.
+   Memakai variabel :root yang sudah ada; breakpoint kolom memakai
+   .product-grid yang sudah ada.
+   ========================================================================== */
+
+.js-product-grid {
+  margin-block: var(--space-3);
+}
+
+.js-product-card {
+  gap: var(--space-1);
+}
+
+.js-product-card h3,
+.js-product-card p {
+  margin-block: 0;
+}
+
+.js-product-summary {
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.stock-badge {
+  display: inline-block;
+  padding: 0.25rem var(--space-2);
+  color: #14532d;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #dcfce7;
+  border-radius: 999px;
+}
+
+.stock-badge.warning {
+  color: #78350f;
+  background: var(--color-highlight-strong);
+}
+
+.stock-badge.empty {
+  color: #7f1d1d;
+  background: #fee2e2;
+}
+
+/* ==========================================================================
    P07-02: Media query mobile-first, diletakkan di akhir stylesheet.
    Semua aturan di atas adalah baseline layar kecil (satu kolom); breakpoint hanya MENAMBAH
    layout saat ruang cukup. Satuan rem mengikuti ukuran huruf bawaan browser pengguna.
