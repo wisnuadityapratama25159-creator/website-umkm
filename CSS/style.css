@@ -574,6 +574,16 @@ audio {
 }
 
 /* ==========================================================================
+   P10: Teks produk unggulan (diisi JavaScript lewat find()).
+   Hanya menambah aturan baru; layout P07 tidak diubah.
+   ========================================================================== */
+
+#produk-unggulan {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
    P07-02: Media query mobile-first, diletakkan di akhir stylesheet.
    Semua aturan di atas adalah baseline layar kecil (satu kolom); breakpoint hanya MENAMBAH
    layout saat ruang cukup. Satuan rem mengikuti ukuran huruf bawaan browser pengguna.
