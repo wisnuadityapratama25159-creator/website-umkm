@@ -77,8 +77,21 @@
           Catatan: data stok hanya contoh (dummy) untuk praktikum, bukan stok sebenarnya.
         </p>
 
-        <!-- P09: container kartu produk, diisi oleh JavaScript -->
-        <div class="product-grid" id="katalog-produk">
+        <!-- P11: tombol filter kategori. Kategori dibaca JS dari atribut data-filter
+             (nilainya harus sama persis dengan properti "kategori" di daftarProduk).
+             Tombol "Camilan" sengaja belum punya produk, dipakai untuk menguji empty state. -->
+        <div class="filter-bar" role="group" aria-label="Filter kategori produk">
+          <button type="button" class="filter-button is-active" data-filter="Semua" aria-pressed="true">Semua</button>
+          <button type="button" class="filter-button" data-filter="Minuman" aria-pressed="false">Minuman</button>
+          <button type="button" class="filter-button" data-filter="Makanan" aria-pressed="false">Makanan</button>
+          <button type="button" class="filter-button" data-filter="Camilan" aria-pressed="false">Camilan</button>
+        </div>
+
+        <!-- P11: #produk-status = status jumlah produk yang sedang tampil, diisi JS lewat textContent -->
+        <p id="produk-status" class="js-product-summary" aria-live="polite">Memuat produk...</p>
+
+        <!-- P09/P11: #produk-grid = container kartu produk, diisi oleh JavaScript (renderKatalog di JS/app.js) -->
+        <div class="product-grid" id="produk-grid">
           <noscript>Aktifkan JavaScript untuk melihat katalog produk.</noscript>
         </div>
       </section>

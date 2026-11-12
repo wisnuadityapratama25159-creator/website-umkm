@@ -1,11 +1,12 @@
 "use strict";
 
-console.log("P10 JavaScript aktif");
+console.log("P11 JavaScript aktif");
 
 // =====================================================================
 // P10: FUNCTION, LOOP, ARRAY METHODS, DAN DEBUGGING
-// Pengembangan dari P09. Data produk, nama elemen HTML (id), dan kelas CSS
-// TIDAK diubah, hanya kode JavaScript-nya yang dirapikan menjadi function kecil.
+// P11: DOM, EVENTS, DAN RENDERING (filter kategori katalog, lihat bagian bertanda "P11").
+// Pengembangan dari P09. Data produk TIDAK diubah. Pada P11, id katalog diseragamkan dengan
+// worksheet (#katalog-produk -> #produk-grid, #katalog-status -> #produk-status).
 //
 // Susunan file:
 //   1. Data & konstanta   (GLOBAL, dibuat sekali, dipakai banyak function)
@@ -170,6 +171,17 @@ function ambilProdukTersedia(daftar) {
   return daftar.filter((produk) => produk.stok > 0);
 }
 
+// P11
+// INPUT : daftar (array of object produk), kategori (string) -> "Semua" / "Minuman" / "Makanan" / ...
+// PROSES: "Semua" mengembalikan seluruh daftar; selain itu filter() berdasarkan produk.kategori
+// OUTPUT: array baru berisi produk yang cocok (array asli tidak berubah)
+function filterProdukByKategori(daftar, kategori) {
+  if (kategori === "Semua") {
+    return daftar;
+  }
+  return daftar.filter((produk) => produk.kategori === kategori);
+}
+
 // INPUT : daftar (array of object produk)
 // PROSES: find() -- mengambil SATU produk pertama yang unggulan === true
 // OUTPUT: object produk, atau null jika tidak ada (find() aslinya mengembalikan
@@ -217,30 +229,78 @@ function buatTeksUnggulan(produk) {
 // Nama kelas CSS mengikuti desain P09 (product-card, product-badge, price, dst.).
 // ---------------------------------------------------------------------
 
+// P11: function pembuat elemen DOM kecil, dipakai berulang oleh buatElemenProduk().
+// INPUT : tag (string), teks (string), kelas (string, boleh kosong)
+// OUTPUT: elemen HTML baru; isinya diisi memakai textContent (bukan innerHTML)
+function buatElemen(tag, teks, kelas) {
+  const elemen = document.createElement(tag);
+  elemen.textContent = teks;
+  if (kelas) {
+    elemen.className = kelas;
+  }
+  return elemen;
+}
+
 // INPUT : produk (object dari daftarProduk)
-// OUTPUT: string HTML satu kartu katalog
-function buatKartuProduk(produk) {
+// PROSES: P11 -- kartu dibuat dengan createElement + textContent + classList + append
+//         (sebelumnya P10 memakai string HTML dan innerHTML). Function ini HANYA membuat
+//         elemen; memasukkannya ke halaman dilakukan renderKatalog().
+//         Tombol "Sembunyikan" memakai remove(): kartu hilang dari tampilan saja,
+//         datanya di array daftarProduk TIDAK dihapus.
+// OUTPUT: elemen <article class="product-card"> yang siap di-append ke container
+function buatElemenProduk(produk) {
   const status = statusStok(produk.stok);
   const label = produk.label ?? "Menu"; // ?? : pakai "Menu" jika label kosong
   const deskripsi = produk.deskripsi ?? "Deskripsi belum tersedia.";
-  const badgeUnggulan = produk.unggulan ? " &#9733;" : "";
+  const badgeUnggulan = produk.unggulan ? " \u2605" : ""; // \u2605 = bintang (sama dengan &#9733; di P10)
 
-  return `
-    <article class="product-card">
-      <span class="product-badge">${label}${badgeUnggulan}</span>
-      <h3>${produk.nama}</h3>
-      <p class="product-category">${produk.kategori}</p>
-      <p>${deskripsi}</p>
-      <p class="price">${formatRupiah(produk.harga)}</p>
-      <p class="stock-status stock-status--${status.kelas}">
-        ${status.teks} (stok: ${produk.stok})
-      </p>
-      <div class="card-actions">
-        <a class="button" href="kontak.html">Tanya produk</a>
-        <a href="#harga-title">Lihat tabel harga</a>
-      </div>
-    </article>
-  `;
+  const kartu = document.createElement("article");
+  kartu.classList.add("product-card");
+
+  const tombolTanya = buatElemen("a", "Tanya produk", "button");
+  tombolTanya.href = "kontak.html";
+
+  const tautanHarga = buatElemen("a", "Lihat tabel harga");
+  tautanHarga.href = "#harga-title";
+
+  const tombolSembunyikan = buatElemen("button", "Sembunyikan", "ghost-button");
+  tombolSembunyikan.type = "button";
+  tombolSembunyikan.setAttribute("aria-label", `Sembunyikan ${produk.nama} dari tampilan`);
+  tombolSembunyikan.addEventListener("click", () => {
+    const wadah = kartu.parentElement;
+    kartu.remove(); // hanya menghapus elemen dari DOM, bukan data produk
+
+    const statusProduk = document.querySelector("#produk-status");
+    if (statusProduk !== null) {
+      statusProduk.textContent =
+        wadah !== null && wadah.children.length === 0
+          ? "Semua kartu disembunyikan. Klik tombol filter untuk menampilkannya lagi."
+          : "Satu kartu disembunyikan dari tampilan sementara.";
+    }
+  });
+
+  const aksi = document.createElement("div");
+  aksi.classList.add("card-actions");
+  aksi.append(tombolTanya, tautanHarga, tombolSembunyikan);
+
+  kartu.append(
+    buatElemen("span", `${label}${badgeUnggulan}`, "product-badge"),
+    buatElemen("h3", produk.nama),
+    buatElemen("p", produk.kategori, "product-category"),
+    buatElemen("p", deskripsi),
+    buatElemen("p", formatRupiah(produk.harga), "price"),
+    buatElemen("p", `${status.teks} (stok: ${produk.stok})`, `stock-status stock-status--${status.kelas}`),
+    aksi
+  );
+
+  return kartu;
+}
+
+// P11: empty state, dibuat saat hasil filter kosong.
+// INPUT : kategori (string)
+// OUTPUT: elemen <p class="empty-state">
+function buatEmptyState(kategori) {
+  return buatElemen("p", `Belum ada produk pada kategori ${kategori}.`, "empty-state");
 }
 
 // INPUT : item (object dari produkUmkm)
@@ -268,23 +328,102 @@ function buatKartuMenu(item) {
 // (bukan dibaca langsung dari variabel global), jadi function bisa dipakai ulang.
 // ---------------------------------------------------------------------
 
-// INPUT : daftar (array of object produk)
-// PROSES: filter() ambil produk aktif -> map() ubah tiap produk jadi HTML -> join("") gabung
-// OUTPUT: tidak ada (void); hasilnya tampil di #katalog-produk
-function renderKatalog(daftar) {
-  const katalog = document.querySelector("#katalog-produk");
+// P11
+// OUTPUT: object { produkGrid, produkStatus, tombolFilter } -- semua target DOM katalog.
+//         querySelector -> satu elemen (atau null jika tidak ada); querySelectorAll -> NodeList
+//         (kosong jika tidak ada). Dibuat function supaya variabelnya tetap LOKAL (lihat catatan
+//         scope di atas) dan bisa dipakai render, event, dan debug.
+function ambilTargetKatalog() {
+  return {
+    produkGrid: document.querySelector("#produk-grid"),
+    produkStatus: document.querySelector("#produk-status"),
+    tombolFilter: document.querySelectorAll("[data-filter]"),
+  };
+}
 
-  // Jika elemen tidak ada (bukan halaman Produk), hentikan tanpa error.
-  if (katalog === null) {
+// INPUT : daftar (array of object produk), kategoriAktif (string, bawaan "Semua")
+// PROSES: P11 -- guard target -> filter() produk aktif -> filter() kategori -> replaceChildren()
+//         kosongkan container -> append kartu (atau empty state) -> textContent update status
+// OUTPUT: tidak ada (void); hasilnya tampil di #produk-grid dan #produk-status
+function renderKatalog(daftar, kategoriAktif = "Semua") {
+  const { produkGrid, produkStatus } = ambilTargetKatalog();
+
+  // app.js dimuat di semua halaman. Jika kedua target tidak ada, ini bukan halaman Produk:
+  // berhenti diam-diam. Jika hanya salah satu yang hilang, itu kesalahan HTML: beri peringatan.
+  if (!produkGrid && !produkStatus) {
+    return;
+  }
+  if (!produkGrid || !produkStatus) {
+    console.warn("Target render produk tidak ditemukan.");
     return;
   }
 
-  const html = daftar
-    .filter((produk) => produk.aktif) // produk nonaktif tidak ditampilkan
-    .map((produk) => buatKartuProduk(produk))
-    .join("");
+  const produkAktif = daftar.filter((produk) => produk.aktif); // produk nonaktif tidak ditampilkan
+  const produkTampil = filterProdukByKategori(produkAktif, kategoriAktif);
 
-  katalog.innerHTML = html || "<p>Belum ada produk untuk ditampilkan.</p>";
+  if (MODE_DEBUG) {
+    console.log("[RENDER] kategori:", kategoriAktif, "| produk tampil:", produkTampil.length);
+  }
+
+  // Kosongkan container dulu supaya kartu lama (dan empty state lama) hilang.
+  produkGrid.replaceChildren();
+
+  if (produkTampil.length === 0) {
+    produkGrid.append(buatEmptyState(kategoriAktif));
+    produkStatus.textContent =
+      kategoriAktif === "Semua" ? "0 produk ditampilkan." : `0 produk ditampilkan pada kategori ${kategoriAktif}.`;
+    return;
+  }
+
+  produkTampil.forEach((produk) => {
+    produkGrid.append(buatElemenProduk(produk));
+  });
+
+  produkStatus.textContent =
+    kategoriAktif === "Semua"
+      ? `${produkTampil.length} produk ditampilkan.`
+      : `${produkTampil.length} produk ditampilkan pada kategori ${kategoriAktif}.`;
+}
+
+// P11
+// INPUT : semuaTombol (NodeList tombol filter), tombolDipilih (elemen tombol yang diklik)
+// PROSES: classList.remove("is-active") dari SEMUA tombol, lalu classList.add pada yang dipilih
+//         (jadi selalu hanya satu tombol aktif). aria-pressed ikut diperbarui untuk pembaca layar.
+// OUTPUT: tidak ada
+function aturTombolAktif(semuaTombol, tombolDipilih) {
+  semuaTombol.forEach((tombol) => {
+    tombol.classList.remove("is-active");
+    tombol.setAttribute("aria-pressed", "false");
+  });
+  tombolDipilih.classList.add("is-active");
+  tombolDipilih.setAttribute("aria-pressed", "true");
+}
+
+// P11
+// INPUT : daftar (array of object produk)
+// PROSES: ambil semua tombol [data-filter], lalu pasang SATU listener "click" per tombol.
+//         Dipanggil sekali saja (dari jalankanProgram), jadi listener tidak menumpuk.
+//         event.currentTarget = tombol yang MEMEGANG listener (selalu tombol, walau yang
+//         diklik elemen di dalamnya); event.target = elemen yang benar-benar diklik.
+//         Kategori dibaca dari dataset.filter (atribut data-filter), bukan dari teks tombol.
+// OUTPUT: tidak ada
+function pasangFilterKatalog(daftar) {
+  const { tombolFilter } = ambilTargetKatalog();
+
+  // Halaman lain (tanpa tombol filter) berhenti di sini tanpa error.
+  if (tombolFilter.length === 0) {
+    return;
+  }
+
+  tombolFilter.forEach((tombol) => {
+    tombol.addEventListener("click", (event) => {
+      const tombolAktif = event.currentTarget;
+      const kategori = tombolAktif.dataset.filter;
+
+      aturTombolAktif(tombolFilter, tombolAktif);
+      renderKatalog(daftar, kategori);
+    });
+  });
 }
 
 // INPUT : daftar (array of object produk)
@@ -352,6 +491,12 @@ function tampilkanDebug() {
   // Tujuan: memastikan find() mengembalikan produk (atau null) dan bukan error.
   console.log("[DEBUG] Produk unggulan:", unggulan !== null ? unggulan.nama : "(tidak ada)");
 
+  // P11 -- Tujuan: memastikan target DOM katalog ditemukan (bukan null) dan jumlah tombol filter benar.
+  const target = ambilTargetKatalog();
+  console.log("[DEBUG] #produk-grid ditemukan:", target.produkGrid !== null);
+  console.log("[DEBUG] #produk-status ditemukan:", target.produkStatus !== null);
+  console.log("[DEBUG] Jumlah tombol [data-filter]:", target.tombolFilter.length);
+
   // Tujuan: melihat isi semua object dalam bentuk tabel (cocok untuk array of object).
   console.table(daftarProduk);
   console.table(produkUmkm);
@@ -378,6 +523,11 @@ function jalankanUjiCepat() {
     { uji: "cariProdukUnggulan([])", hasil: String(cariProdukUnggulan([])), harapan: "null" },
     { uji: "buatTeksUnggulan(null)", hasil: buatTeksUnggulan(null), harapan: "Belum ada produk unggulan." },
     { uji: "buatTeksUnggulan(produk)", hasil: buatTeksUnggulan({ nama: "Americano" }), harapan: "Produk unggulan: Americano" },
+    // P11: filter kategori pada data asli daftarProduk
+    { uji: 'filterProdukByKategori(Semua)', hasil: String(filterProdukByKategori(daftarProduk, "Semua").length), harapan: "3" },
+    { uji: 'filterProdukByKategori(Minuman)', hasil: String(filterProdukByKategori(daftarProduk, "Minuman").length), harapan: "2" },
+    { uji: 'filterProdukByKategori(Makanan)', hasil: String(filterProdukByKategori(daftarProduk, "Makanan").length), harapan: "1" },
+    { uji: 'filterProdukByKategori(Camilan)', hasil: String(filterProdukByKategori(daftarProduk, "Camilan").length), harapan: "0" },
   ];
 
   const tabel = kasus.map((k) => ({
@@ -397,12 +547,13 @@ function jalankanUjiCepat() {
 // Dipanggil setelah DOM siap. Argumen (daftarProduk / produkUmkm) dikirim ke parameter "daftar".
 // ---------------------------------------------------------------------
 function jalankanProgram() {
-  renderKatalog(daftarProduk);
+  renderKatalog(daftarProduk); // tampilan awal: kategori "Semua"
+  pasangFilterKatalog(daftarProduk); // P11: pasang listener tombol filter (sekali saja)
   renderRingkasan(daftarProduk);
   renderProduk(produkUmkm);
 
   // Pemeriksaan Console hanya di halaman Produk agar halaman lain tetap bersih.
-  if (MODE_DEBUG && document.querySelector("#katalog-produk") !== null) {
+  if (MODE_DEBUG && document.querySelector("#produk-grid") !== null) {
     tampilkanDebug();
     jalankanUjiCepat();
   }
