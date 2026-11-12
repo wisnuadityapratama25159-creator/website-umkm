@@ -584,6 +584,50 @@ audio {
 }
 
 /* ==========================================================================
+   P11: Filter kategori katalog dan empty state.
+   Hanya menambah aturan baru; memakai variabel :root yang sudah ada.
+   ========================================================================== */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-3);
+}
+
+/* Tombol filter tidak aktif: tampil outline. Tombol aktif: terisi warna utama.
+   .ghost-button (tombol "Sembunyikan" di kartu) memakai tampilan outline yang sama. */
+.filter-button,
+.ghost-button {
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+}
+
+.filter-button:hover,
+.ghost-button:hover {
+  color: var(--color-primary-strong);
+  background: var(--color-highlight);
+}
+
+.filter-button.is-active,
+.filter-button.is-active:hover {
+  color: var(--color-surface);
+  background: var(--color-primary);
+}
+
+/* Empty state membentang selebar grid agar tidak terjepit di satu kolom. */
+.empty-state {
+  grid-column: 1 / -1;
+  padding: var(--space-3);
+  color: var(--color-muted);
+  font-weight: 600;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
    P07-02: Media query mobile-first, diletakkan di akhir stylesheet.
    Semua aturan di atas adalah baseline layar kecil (satu kolom); breakpoint hanya MENAMBAH
    layout saat ruang cukup. Satuan rem mengikuti ukuran huruf bawaan browser pengguna.
