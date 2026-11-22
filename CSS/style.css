@@ -681,3 +681,79 @@ audio {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* ==========================================================================
+   P12: VALIDASI FORM, PESAN ERROR AKSESIBEL, DAN PREFERENSI localStorage
+   Hanya menambah gaya baru; aturan lama di atas tidak diubah.
+   ========================================================================== */
+
+/* Pesan error di bawah setiap field. Berisi teks (bukan hanya warna) agar bisa dibaca semua pengguna.
+   min-height menjaga tata letak tidak melompat saat pesan muncul. */
+.field-error {
+  min-height: 1.4rem;
+  margin: var(--space-1) 0 0;
+  color: #b91c1c;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Field yang tidak valid diberi garis tepi merah. aria-invalid diatur oleh JS/form.js. */
+[aria-invalid="true"] {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgb(185 28 28 / 15%);
+}
+
+/* Fokus tetap terlihat jelas saat JavaScript memindahkan fokus ke field yang salah. */
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible,
+fieldset input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Umpan balik form (aria-live). Netral dulu; .error merah, .success hijau.
+   Warna selalu dipadukan dengan teks, bukan warna saja. */
+.form-feedback {
+  margin-block: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-weight: 700;
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.form-feedback.error {
+  color: #b91c1c;
+  background: #fef2f2;
+  border-color: #b91c1c;
+}
+
+.form-feedback.success {
+  color: #166534;
+  background: #f0fdf4;
+  border-color: #15803d;
+}
+
+/* Panel preferensi dan newsletter tampil sebagai kartu, sama seperti form. */
+.panel-preferensi {
+  margin-block: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+/* Tombol aksi disusun vertikal di layar kecil. */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (min-width: 42rem) {
+  .form-actions {
+    flex-direction: row;
+  }
+}

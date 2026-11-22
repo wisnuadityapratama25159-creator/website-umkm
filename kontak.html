@@ -6,6 +6,7 @@
     <title>Kontak - Warkop Mas Hamzah</title>
     <link rel="stylesheet" href="CSS/style.css" />
     <script src="JS/form.js" defer></script>
+    <script src="JS/newsletter.js" defer></script>
     <script src="JS/app.js" defer></script>
   </head>
 
@@ -31,7 +32,12 @@
         Silakan kirim pertanyaan tentang produk, pesanan, atau kerja sama.
       </p>
 
-      <form id="form-kontak" action="#" method="post">
+      <!-- P12: umpan balik form (aria-live), diisi oleh JS/form.js -->
+      <p id="form-feedback" class="form-feedback" aria-live="polite">Lengkapi form, lalu klik tombol di bawah.</p>
+
+      <!-- P12: novalidate mematikan bubble bawaan browser agar pesan error dikendalikan JavaScript.
+           Constraint Validation API (checkValidity, setCustomValidity, reportValidity) tetap dipakai. -->
+      <form id="form-kontak" action="#" method="post" novalidate>
         <div class="field">
           <label for="nama">Nama lengkap</label>
           <input
@@ -41,7 +47,10 @@
             autocomplete="name"
             required
             minlength="3"
+            maxlength="80"
+            aria-describedby="nama-error"
           />
+          <p id="nama-error" class="field-error" aria-live="polite"></p>
         </div>
 
         <div class="field">
@@ -52,47 +61,57 @@
             type="email"
             autocomplete="email"
             required
+            aria-describedby="email-error"
           />
+          <p id="email-error" class="field-error" aria-live="polite"></p>
         </div>
 
         <div class="field">
-          <label for="telepon">Nomor telepon</label>
+          <label for="telepon">Nomor telepon (opsional)</label>
           <input
             id="telepon"
             name="telepon"
             type="tel"
             autocomplete="tel"
+            pattern="08[0-9]{8,11}"
+            title="Nomor telepon diawali 08 lalu 8 sampai 11 angka, tanpa spasi atau tanda hubung."
+            aria-describedby="telepon-error"
           />
+          <p id="telepon-error" class="field-error" aria-live="polite"></p>
         </div>
 
         <div class="field">
           <label for="paket">Paket yang diminati</label>
 
-          <select id="paket" name="paket" required>
+          <select id="paket" name="paket" required aria-describedby="paket-error">
             <option value="">Pilih paket</option>
             <option value="rumahan">Paket seduh rumahan</option>
             <option value="kantor">Paket kantor mingguan</option>
             <option value="tester">Paket tester pelanggan baru</option>
           </select>
+          <p id="paket-error" class="field-error" aria-live="polite"></p>
         </div>
 
         <fieldset>
           <legend>Topik pertanyaan</legend>
 
           <label>
-            <input type="radio" name="topik" value="produk" required />
+            <input type="radio" name="topik" value="produk" required aria-describedby="topik-error" />
             Informasi produk
           </label>
 
           <label>
-            <input type="radio" name="topik" value="pesanan" />
+            <input type="radio" name="topik" value="pesanan" aria-describedby="topik-error" />
             Status pesanan
           </label>
 
           <label>
-            <input type="radio" name="topik" value="kerja-sama" />
+            <input type="radio" name="topik" value="kerja-sama" aria-describedby="topik-error" />
             Kerja sama
           </label>
+
+          <!-- Satu pesan error untuk seluruh radio group -->
+          <p id="topik-error" class="field-error" aria-live="polite"></p>
         </fieldset>
 
         <div class="field">
@@ -103,12 +122,84 @@
             name="pesan"
             rows="5"
             required
-            minlength="10"
+            minlength="20"
+            maxlength="500"
+            aria-describedby="pesan-error"
           ></textarea>
+          <p id="pesan-error" class="field-error" aria-live="polite"></p>
         </div>
+
+        <!-- P12: persetujuan wajib sebelum data dummy boleh dipreview -->
+        <fieldset>
+          <legend>Persetujuan</legend>
+
+          <label>
+            <input id="setuju" name="setuju" type="checkbox" value="ya" required aria-describedby="setuju-error" />
+            Saya setuju data dummy ini ditampilkan sebagai preview.
+          </label>
+
+          <p id="setuju-error" class="field-error" aria-live="polite"></p>
+        </fieldset>
 
         <button type="submit">Tampilkan Preview</button>
       </form>
+
+      <!-- P12: preferensi kontak disimpan di localStorage oleh JS/form.js.
+           Paket dan topik diambil dari form di atas; channel kontak dipilih di panel ini. -->
+      <section id="panel-preferensi" class="panel-preferensi" aria-labelledby="preferensi-title">
+        <h2 id="preferensi-title">Preferensi Kontak</h2>
+
+        <p id="preferensi-status" class="form-feedback" aria-live="polite">Memuat preferensi...</p>
+
+        <p>Paket dan topik yang tersimpan diambil dari form kontak di atas.</p>
+
+        <fieldset>
+          <legend>Channel kontak</legend>
+
+          <label>
+            <input type="checkbox" value="email" data-channel />
+            Email
+          </label>
+
+          <label>
+            <input type="checkbox" value="whatsapp" data-channel />
+            WhatsApp
+          </label>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="button" id="simpan-preferensi">Simpan Preferensi</button>
+          <button type="button" id="hapus-preferensi" class="ghost-button">Hapus Preferensi</button>
+        </div>
+      </section>
+
+      <!-- P12: newsletter ringan, disimpan oleh JS/newsletter.js -->
+      <section aria-labelledby="newsletter-title">
+        <h2 id="newsletter-title">Newsletter</h2>
+
+        <p id="newsletter-status" class="form-feedback" aria-live="polite">Memuat data newsletter...</p>
+
+        <form id="form-newsletter" action="#" method="post" novalidate>
+          <div class="field">
+            <label for="newsletter-email">Email newsletter</label>
+            <input
+              id="newsletter-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="100"
+              aria-describedby="newsletter-email-error"
+            />
+            <p id="newsletter-email-error" class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit">Simpan Email</button>
+            <button type="button" id="newsletter-hapus" class="ghost-button">Hapus Email</button>
+          </div>
+        </form>
+      </section>
 
       <section class="preview-section" aria-labelledby="preview-title">
         <h2 id="preview-title">Preview Data</h2>
